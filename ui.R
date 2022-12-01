@@ -11,6 +11,7 @@ library(shiny)
 #Read Database 
 Acquisitions <- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/acquisitions.csv")
 objects <- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/objects.csv")
+
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
 
@@ -20,12 +21,20 @@ shinyUI(fluidPage(
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
-            selectInput("name", "Select a name", choices = objects$name)
+            selectInput("catagory_code", "Select an Industry", choices = objects$category_code)
         ),
-
-        # Show a plot of the generated distribution
+            selectInput("state", "Select a State", choices = objects$state_code)
+    ),
+        # Show graph of the generated distribution
         mainPanel(
-            tableOutput("objects")
+          tabsetPanel(
+            tabPanel("Funding", plotOutput("funding")),
+            tabPanel("Company", tableOutput("name"))
+            
+            
+          )
+          
+            
         )
     )
-))
+)

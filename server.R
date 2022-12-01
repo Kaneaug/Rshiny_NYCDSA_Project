@@ -12,9 +12,10 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
+  output$funding<- renderPlot({
+    ggplot(objects$funding_total_usd)
+  })
   
-    output$objects < renderTable({
-      nameFilter <- subset(objects, objects$name == input$name)
     
 
     })

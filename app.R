@@ -6,8 +6,7 @@ library(stringr)
 
 df<- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/combined_csv.csv")
 
-#%>%
-#
+
 #df <- df %>% 
   #filter(grepl("^\\d+\\/\\d+\\/\\d+$", acquired_at))
 #df_view <- df %>% 
@@ -19,9 +18,10 @@ df$year_df <- df$acquired_at %>%
 
 
 ui <- fluidPage(
-  
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.min.css")),
+    
     titlePanel("Start-up funding by Country"),
-    shinythemes::shinytheme("superhero"),
     sidebarLayout(
       sidebarPanel(
     selectInput("country", "Choose Country", choices = unique(df$country_code)),

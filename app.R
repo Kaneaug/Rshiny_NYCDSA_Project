@@ -27,7 +27,12 @@ ui <- fluidPage(
       sidebarPanel(
     selectInput("country", "Choose Country", choices = unique(df$country_code)),
     sliderInput("year_input", "Choose year", min=1966, max=2013, value=2000)),
-    mainPanel(plotOutput("plot_year"))
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Plot", plotOutput("plot_year")),
+        tabPanel("Table", tableOutput("table"))
+      )
+    )
 ))
   
    
@@ -37,11 +42,12 @@ output$plot_year <- renderPlot({
     df_country <- df %>% 
       filter(country_code == input$country) %>% 
       filter(year_df >= input$year_input)
-    ggplot(df_country,aes(x=as.Date(acquired_at, format = "%d/%m/%Y"), y=price_amount, size = price_amount, color = term_code))+
+    
+    ggplot(df_country,aes(x=as.Date(acquired_at, format = "%d/%m/%Y"), y = price_amount, size = price_amount, color = term_code))+
       geom_point(alpha = .2) +
       scale_size(range = c(1,24), name = "Total amount raised")+
       scale_y_log10()+
-      labs(x="Year",y = "Funding" )
+      labs(x="Year",y = "Funding", color = "Company Purchased with:" )
     
   }) 
    

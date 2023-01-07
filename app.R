@@ -4,6 +4,7 @@ library(ggplot2)
 library(dplyr)
 library(stringr)
 
+
 df<- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/combined_csv.csv")
 
 
@@ -36,10 +37,11 @@ output$plot_year <- renderPlot({
     df_country <- df %>% 
       filter(country_code == input$country) %>% 
       filter(year_df >= input$year_input)
-    ggplot(df_country,aes(x=as.Date(acquired_at, format = "%d/%m/%Y"), y=price_amount, color = price_amount, size = price_amount))+
-      geom_point() +
+    ggplot(df_country,aes(x=as.Date(acquired_at, format = "%d/%m/%Y"), y=price_amount, size = price_amount, color = term_code))+
+      geom_point(alpha = .2) +
+      scale_size(range = c(1,24), name = "Total amount raised")+
       scale_y_log10()+
-    labs(x="Year",y = "Funding" )
+      labs(x="Year",y = "Funding" )
     
   }) 
    

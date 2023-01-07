@@ -2,8 +2,9 @@ library(readr)
 library(shiny)
 library(ggplot2)
 library(dplyr)
-library(string
-df <- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/combined_csv.csv")
+library(stringr)
+
+df<- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/combined_csv.csv")
 
 #%>%
 #filter(year_df >= input$year_input)
@@ -37,7 +38,7 @@ output$plot_year <- renderPlot({
     ggplot(df_country,aes(x=as.Date(acquired_at, format = "%d/%m/%Y"), y=price_amount, color = price_amount, size = price_amount))+
       geom_point() +
       scale_y_log10()+
-    labs(x="Funding",y = "Year")
+    labs(x="Year",y = "Funding" )
     
   }) 
    

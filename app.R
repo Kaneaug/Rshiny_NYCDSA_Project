@@ -2,7 +2,7 @@ library(readr)
 library(shiny)
 library(ggplot2)
 library(dplyr)
-library(stringr)
+library(string
 df <- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/combined_csv.csv")
 
 #%>%

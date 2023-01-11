@@ -3,9 +3,10 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(stringr)
-
+library(DT)
 
 df<- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/combined_csv.csv")
+fund<- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/funds.csv")
 
 
 #df <- df %>% 
@@ -30,7 +31,7 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel("Plot", plotOutput("plot_year")),
-        tabPanel("Table", tableOutput("table"))
+        tabPanel("Table", DT::dataTableOutput("d_table"))
       )
     )
 ))
@@ -50,7 +51,10 @@ output$plot_year <- renderPlot({
       labs(x="Year",y = "Funding", color = "Company Purchased with:" )
     
   }) 
-   
+output$d_table <- DT::renderDataTable({
+  f_table <- fund[, c("name","funded_at","raised_amount","raised_currency_code","source_url","source_description","created_at","updated_at")]
+  f_table
+})
 }
 
 shinyApp(ui, server)

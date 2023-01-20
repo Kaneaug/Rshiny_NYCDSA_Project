@@ -9,6 +9,7 @@ df<- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/combine
 fund<- read.csv("C://Users/kanem/Rshiny_project/Rshiny_project/csv_combine/funds.csv")
 
 
+
 #df <- df %>% 
   #filter(grepl("^\\d+\\/\\d+\\/\\d+$", acquired_at))
 #df_view <- df %>% 
@@ -17,24 +18,30 @@ df$year_df <- df$acquired_at %>%
   str_sub(-4) %>% 
   strtoi()
 df$color <- df$term_code
-
+tot_fun <- sum(df_main$funding_total_usd)
 
 ui <- fluidPage(
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.min.css")),
     
-    titlePanel("Start-up successes"),
+    titlePanel("Start-up Market Insights"),
     sidebarLayout(
       sidebarPanel(
     selectInput("op_status", "Company's Operation Status", choices = unique(df_main$status)),
     sliderInput("rounds", "Rounds of funding", min=1, max=15, value=1)),
     mainPanel(
       tabsetPanel(
-        tabPanel("Funding by Industry", plotOutput("fund_plot")),
+        tabPanel("Funding by Industry", plotOutput("fund_plot"),p("Total funding for every industry from start-up investors.
+        Startup investors make a profit from their investments when they sell part or all of 
+        their portion of ownership in the company during a liquidity event, such as an IPO or acquisition. Now, however, 
+        most of the value creation has shifted to early-stage private company investors.
+        In fact, if you were to wait until a startup goes public to invest, you could be 
+        missing out on 95% of the gains, which are often accrued by investors before the IPO.")),
         tabPanel("Company overview", DT::dataTableOutput("d_table")),
-        tabPanel("Total Funding", plotOutput("sc_plot"))
-      ),
-      plotOutput("line_g")
+        tabPanel("Total Funding", plotOutput("sc_plot"),paste("Total Funding in USD", "$", tot_fun)), 
+        tabPanel("Analysis", plotOutput("line_g"))
+      )
+      
     )
 ))
   
